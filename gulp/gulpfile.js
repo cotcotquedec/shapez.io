@@ -234,6 +234,28 @@ gulp.task(
     )
 );
 
+// Pre-builds the heavy assets (atlas + sounds) once, e.g. at docker image build time.
+// Produces res_built/ so that build.prepare.dev.fast can reuse it instead of rebuilding.
+gulp.task("build.assets.docker", gulp.series("imgres.buildAtlas", "imgres.atlasToJson", "sounds.sfx"));
+
+// Like build.prepare.dev but skips the expensive cold-build steps (cleanup, atlas packing,
+// sound encoding), reusing a pre-built res_built/. Only does the cheap copy/compile steps.
+gulp.task(
+    "build.prepare.dev.fast",
+    gulp.series(
+        "utils.copyAdditionalBuildFiles",
+        "localConfig.findOrCreate",
+        "imgres.atlasToJson",
+        "imgres.atlas",
+        "sounds.sfxCopyAtlas",
+        "sounds.copy",
+        "imgres.copyImageResources",
+        "imgres.copyNonImageResources",
+        "translations.fullBuild",
+        "css.dev"
+    )
+);
+
 // Builds everything for every variant
 for (const variant in BUILD_VARIANTS) {
     const data = BUILD_VARIANTS[variant];
@@ -274,6 +296,16 @@ for (const variant in BUILD_VARIANTS) {
     gulp.task(
         "serve." + variant,
         gulp.series("build.prepare.dev", "html." + variant + ".dev", () => serveHTML({ version: variant }))
+    );
+
+    // Fast serve: reuses pre-built assets (res_built/) instead of doing a full cold build on
+    // startup. Intended for docker, where build.assets.docker bakes res_built/ into the image.
+    // The serveHTML watchers still rebuild the atlas/sounds on file changes.
+    gulp.task(
+        "serve." + variant + ".fast",
+        gulp.series("build.prepare.dev.fast", "html." + variant + ".dev", () =>
+            serveHTML({ version: variant })
+        )
     );
 }
 
