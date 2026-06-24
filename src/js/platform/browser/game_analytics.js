@@ -118,7 +118,7 @@ export class ShapezGameAnalytics extends GameAnalyticsInterface {
             return;
         }
 
-        window.setAbt = abt => {
+        /** @type {any} */ (window).setAbt = abt => {
             this.app.storage.writeFileAsync("shapez_" + CURRENT_ABT + ".bin", String(abt));
             window.location.reload();
         };

@@ -40,8 +40,10 @@ export class PreloadState extends GameState {
         this.lastHintShown = -1000;
         this.nextHintDuration = 0;
 
-        this.statusText = this.htmlElement.querySelector("#ll_preload_status");
-        this.progressElement = this.htmlElement.querySelector("#ll_progressbar span");
+        this.statusText = /** @type {HTMLElement} */ (this.htmlElement.querySelector("#ll_preload_status"));
+        this.progressElement = /** @type {HTMLElement} */ (this.htmlElement.querySelector(
+            "#ll_progressbar span"
+        ));
 
         this.startLoading();
     }
@@ -319,6 +321,7 @@ export class PreloadState extends GameState {
     /**
      *
      * @param {string} text
+     * @param {number} [progress]
      */
     setStatus(text, progress) {
         logger.log("✅ " + text);
