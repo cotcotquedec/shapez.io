@@ -50,12 +50,12 @@ import { MODS_ADDITIONAL_ITEMS } from "../game/item_resolver";
 /**
  * @template {(...args: any[]) => any} F
  * @template P
- * @typedef {(...args: [...Parameters<F>, P]) => ReturnType<F>} afterPrams
+ * @typedef {(...args: any[]) => ReturnType<F>} afterPrams TS 3.9 lacks variadic tuple types ([...Parameters<F>, P]), so args are loosened to any[]
  */
 
 /**
  * @template {(...args: any[]) => any} F
- * @typedef {(...args: [...Parameters<F>, ...any]) => ReturnType<F>} extendsPrams
+ * @typedef {(...args: any[]) => ReturnType<F>} extendsPrams TS 3.9 lacks variadic tuple types ([...Parameters<F>, ...any]), so args are loosened to any[]
  */
 
 export class ModInterface {

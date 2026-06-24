@@ -549,7 +549,7 @@ export class MainMenuState extends GameState {
     }
 
     fetchPlayerCount() {
-        const element = this.htmlElement.querySelector(".onlinePlayerCount");
+        const element = /** @type {HTMLElement} */ (this.htmlElement.querySelector(".onlinePlayerCount"));
         if (!element) {
             return;
         }
