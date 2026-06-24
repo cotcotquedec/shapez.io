@@ -1,0 +1,9 @@
+node_modules
+gulp/node_modules
+build
+build_output
+res_built
+tmp_standalone_files
+tmp_standalone_files_china
+tmp_standalone_files_wegame
+gulp/runnable-texturepacker.jar
