@@ -73,7 +73,10 @@ export class RestrictionManager extends ReadWriteProxy {
             return typeof window !== "undefined" && window.location.search.indexOf("demo") >= 0;
         }
 
-        return true;
+        // The web build is no longer a limited "demo": the full configured campaign is
+        // available (watermark, savegame/waypoint limits and the "end of demo" wall are gone).
+        // The game still stops after the configured levels via RegularGameMode.getIsFreeplayAvailable().
+        return false;
     }
 
     /**

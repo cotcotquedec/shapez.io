@@ -52,6 +52,21 @@
         }
     }
 
+    // Full-screen translucent yellow tint, keeps the blurred moving background visible behind
+    &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(#f5e11e, 0.55);
+        backdrop-filter: blur(#{D(8px)});
+        -webkit-backdrop-filter: blur(#{D(8px)});
+        pointer-events: none;
+        z-index: 2;
+        content: "";
+    }
+
     &::after {
         position: absolute;
         top: 0;
@@ -169,6 +184,35 @@
         grid-column: 2 / 3;
         flex-direction: column;
         @include S(grid-gap, 20px);
+
+        .quickSettings {
+            background: rgba(#fff, 0.7);
+            pointer-events: all;
+            box-sizing: border-box;
+            @include S(border-radius, $globalBorderRadius);
+            @include S(padding, 15px);
+            display: flex;
+            flex-direction: column;
+            @include S(grid-gap, 10px);
+
+            h3 {
+                margin: 0;
+                @include PlainText;
+                text-transform: uppercase;
+                opacity: 0.6;
+            }
+
+            .quickSetting {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                @include S(grid-gap, 15px);
+
+                label {
+                    @include PlainText;
+                }
+            }
+        }
 
         .mainNews {
             background: linear-gradient(220deg, rgb(74, 93, 201), rgb(93, 255, 150));
@@ -703,8 +747,14 @@
         overflow: hidden;
         box-sizing: border-box;
 
-        &[data-savegames="0"] .buttons .outer {
-            grid-template-rows: 1fr 1fr;
+        // No savegames: only the play button remains, let it fill the whole block width
+        &[data-savegames="0"] {
+            .buttons {
+                grid-template-columns: 1fr;
+            }
+            .buttons .outer {
+                display: none;
+            }
         }
 
         .buttons {
@@ -1240,6 +1290,45 @@
                 transition: opacity 0.12s ease-in-out;
                 &:hover {
                     opacity: 1;
+                }
+            }
+        }
+
+        // Keep the social links inside the footer (override the default fixed top-left placement)
+        .socialLinks {
+            position: static;
+            flex-shrink: 0;
+            align-items: flex-end;
+        }
+
+        .attribution {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            @include S(gap, 12px);
+
+            .thanksText {
+                @include SuperSmallText;
+                font-weight: bold;
+                color: #000;
+                opacity: 0.7;
+                @include S(max-width, 460px);
+            }
+
+            .producerLink {
+                pointer-events: all;
+                display: flex;
+                align-items: center;
+                flex-shrink: 0;
+                &:hover img {
+                    opacity: 0.85;
+                }
+                img {
+                    transition: opacity 0.12s ease-in-out;
+                    @include S(width, 82px * 0.8);
+                    @include S(height, 25px * 0.8);
+                    filter: invert(100%);
+                    opacity: 0.75;
                 }
             }
         }

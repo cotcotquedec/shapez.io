@@ -1,0 +1,58 @@
+#ingame_HUD_EndScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    pointer-events: all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & {
+        /* @load-async */
+        background: rgba(#333538, 0.98) uiResource("dialog_bg_pattern.png") top left / #{D(10px)} repeat;
+    }
+
+    @include InlineAnimation(0.2s ease-in-out) {
+        0% {
+            opacity: 0;
+        }
+    }
+
+    .dialog {
+        @include S(border-radius, $globalBorderRadius);
+        @include S(padding, 30px);
+        @include S(max-width, 500px);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        color: #fff;
+        text-align: center;
+
+        @include InlineAnimation(0.5s ease-in-out) {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+        }
+
+        .title {
+            @include SuperHeading;
+            text-transform: uppercase;
+            @include S(font-size, 40px);
+            @include S(margin-bottom, 20px);
+        }
+
+        .desc {
+            @include PlainText;
+            @include S(margin-bottom, 30px);
+            opacity: 0.9;
+        }
+
+        button.close {
+            @include S(padding, 10px, 40px);
+        }
+    }
+}

@@ -769,10 +769,6 @@ export function getLogoSprite() {
         return "logo.png";
     }
 
-    if (G_IS_BROWSER) {
-        return "logo_demo.png";
-    }
-
     return "logo.png";
 }
 

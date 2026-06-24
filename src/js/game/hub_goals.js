@@ -115,7 +115,7 @@ export class HubGoals extends BasicSerializableObject {
                 if (ev.key === "p") {
                     // root is not guaranteed to exist within ~0.5s after loading in
                     if (this.root && this.root.app && this.root.app.gameAnalytics) {
-                        if (!this.isEndOfDemoReached()) {
+                        if (!this.isGameWon()) {
                             this.onGoalCompleted();
                         }
                     }
@@ -125,13 +125,16 @@ export class HubGoals extends BasicSerializableObject {
     }
 
     /**
-     * Returns whether the end of the demo is reached
+     * Returns whether the whole campaign has been won, i.e. the last configured
+     * level has been completed and no freeplay follows. Note: this is only true
+     * *after* completing the last level (level > number of levels), so the last
+     * level itself stays playable.
      * @returns {boolean}
      */
-    isEndOfDemoReached() {
+    isGameWon() {
         return (
             !this.root.gameMode.getIsFreeplayAvailable() &&
-            this.level >= this.root.gameMode.getLevelDefinitions().length
+            this.level > this.root.gameMode.getLevelDefinitions().length
         );
     }
 
@@ -227,7 +230,7 @@ export class HubGoals extends BasicSerializableObject {
             this.getCurrentGoalDelivered() >= this.currentGoal.required ||
             (G_IS_DEV && globalConfig.debug.rewardsInstant)
         ) {
-            if (!this.isEndOfDemoReached()) {
+            if (!this.isGameWon()) {
                 this.onGoalCompleted();
             }
         }
@@ -247,6 +250,19 @@ export class HubGoals extends BasicSerializableObject {
                 required,
                 reward,
                 throughputOnly,
+            };
+            return;
+        }
+
+        if (!this.root.gameMode.getIsFreeplayAvailable()) {
+            // Campaign finished, no freeplay. Keep a valid (but unreachable) goal so nothing
+            // referencing currentGoal.definition breaks; the hub shows the "game complete" state.
+            const lastLevel = levels[levels.length - 1];
+            this.currentGoal = {
+                definition: this.root.shapeDefinitionMgr.getShapeFromShortKey(lastLevel.shape),
+                required: Infinity,
+                reward: enumHubGoalRewards.no_reward,
+                throughputOnly: false,
             };
             return;
         }

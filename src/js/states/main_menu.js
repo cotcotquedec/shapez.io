@@ -78,7 +78,7 @@ export class MainMenuState extends GameState {
                 !G_IS_STEAM_DEMO &&
                 /** @type { PlatformWrapperImplElectron}*/ (this.app.platformWrapper).dlcs.puzzle);
 
-        const showShapez2 = showExternalLinks && MODS.mods.length === 0;
+        const showShapez2 = false;
 
         const bannerHtml = `
             <h3>${T.demoBanners.titleV2}</h3>
@@ -139,41 +139,28 @@ export class MainMenuState extends GameState {
                 ${/*showUpdateLabel ? `<span class="updateLabel">MODS UPDATE!</span>` : ""*/ ""}
             </div>
 
-            <div class="mainWrapper" data-columns="${showDemoAdvertisement || showPuzzleDLC ? 2 : 1}">
+            <div class="mainWrapper" data-columns="2">
                 <div class="mainContainer">
                     <div class="buttons"></div>
                     <div class="savegamesMount"></div>
-                    ${
-                        hasSteamBridge && (G_IS_STANDALONE || !WEB_STEAM_SSO_AUTHENTICATED)
-                            ? `<div class="steamSso">
-                                <span class="description">${
-                                    G_IS_STANDALONE
-                                        ? T.mainMenu.playFullVersionStandalone
-                                        : T.mainMenu.playFullVersionV2
-                                }</span>
-                                <a class="ssoSignIn" target="_blank" href="${
-                                    this.app.clientApi.getEndpoint() + "/v1/noauth/steam-sso"
-                                }">Sign in</a>
-                            </div>`
-                            : ""
-                    }
-                    ${
-                        hasSteamBridge && WEB_STEAM_SSO_AUTHENTICATED
-                            ? `
-                            <div class="steamSso">
-                                <span class="description">${T.mainMenu.playingFullVersion}</span>
-                                <a class="ssoSignOut" href="?sso_logout_silent">${T.mainMenu.logout}</a>
-
-                            </div>
-                        `
-                            : ""
-                    }
 
 
 
                 </div>
 
                 <div class="sideContainer">
+                    <div class="quickSettings">
+                        <h3>${T.mainMenu.quickSettings.title}</h3>
+                        <div class="quickSetting">
+                            <label>${T.settings.labels.enableColorBlindHelper.title}</label>
+                            <div class="value checkbox ${
+                                this.app.settings.getAllSettings().enableColorBlindHelper ? "checked" : ""
+                            }" data-setting="enableColorBlindHelper">
+                                <span class="knob"></span>
+                            </div>
+                        </div>
+                    </div>
+
                     ${showDemoAdvertisement ? `<div class="standaloneBanner">${bannerHtml}</div>` : ""}
 
                     ${
@@ -268,82 +255,28 @@ export class MainMenuState extends GameState {
                     `
                     : `
 
-                <div class="footer ${showExternalLinks ? "" : "noLinks"} ">
+                <div class="footer">
+
+                    <div class="attribution">
+                        <span class="thanksText">${T.mainMenu.footerThanks}</span>
+                        <a class="producerLink" href="https://tobspr.io" target="_blank" title="tobspr Games" rel="follow">
+                            <img src="${cachebust("res/logo-tobspr-games.svg")}" alt="tobspr Games"
+                            height="${25 * 0.8 * this.app.getEffectiveUiScale()}"
+                            width="${82 * 0.8 * this.app.getEffectiveUiScale()}"
+                            >
+                        </a>
+                    </div>
 
                     <div class="socialLinks">
-                    ${
-                        showExternalLinks && !G_IS_STEAM_DEMO
-                            ? `<a class="patreonLink boxLink" target="_blank">
-                                    <span class="thirdpartyLogo patreonLogo"></span>
-                                    <span class="label">Patreon</span>
-                                </a>`
-                            : ""
-                    }
-                    ${
-                        showExternalLinks && (!G_IS_STANDALONE || G_IS_STEAM_DEMO)
-                            ? `<a class="steamLinkSocial boxLink" target="_blank">
-                                    <span class="thirdpartyLogo steamLogo"></span>
-                                    <span class="label">steam</span>
-                                </a>`
-                            : ""
-                    }
-                    ${
-                        showExternalLinks && !G_IS_STEAM_DEMO
-                            ? `
+                        <a class="steamLinkSocial boxLink" target="_blank">
+                            <span class="thirdpartyLogo steamLogo"></span>
+                            <span class="label">steam</span>
+                        </a>
                         <a class="githubLink boxLink" target="_blank">
                             <span class="thirdpartyLogo githubLogo"></span>
                             <span class="label">GitHub</span>
-                        </a>`
-                            : ""
-                    }
-
-
-                    ${
-                        showDiscordLink
-                            ? `<a class="discordLink boxLink" target="_blank">
-                                    <span class="thirdpartyLogo  discordLogo"></span>
-                                    <span class="label">Discord</span>
-                                </a>`
-                            : ""
-                    }
-
-                    ${
-                        showExternalLinks
-                            ? `<a class="redditLink boxLink" target="_blank">
-                                    <span class="thirdpartyLogo redditLogo"></span>
-                                    <span class="label">Reddit</span>
-                                </a>`
-                            : ""
-                    }
-
-                    ${
-                        /*
-                        showExternalLinks
-                            ? `<a class="twitterLink boxLink" target="_blank">
-                                    <span class="thirdpartyLogo twitterLogo"></span>
-                                    <span class="label">Twitter</span>
-                                </a>`
-                            : ""
-                            */
-                        ""
-                    }
-
-
+                        </a>
                     </div>
-
-                    <div class="footerGrow">
-                        ${showExternalLinks ? `<a class="changelog">${T.changelog.title}</a>` : ""}
-
-                        ${showExternalLinks ? `<a class="helpTranslate">${T.mainMenu.helpTranslate}</a>` : ""}
-
-                    </div>
-                        <div class="author"><a class="producerLink" href="https://tobspr.io" target="_blank" title="tobspr Games" rel="follow">
-                        <img src="${cachebust("res/logo-tobspr-games.svg")}" alt="tobspr Games"
-                        height="${25 * 0.8 * this.app.getEffectiveUiScale()}"
-                        width="${82 * 0.8 * this.app.getEffectiveUiScale()}"
-                        >
-
-                    </a></div>
 
                 </div>
 
@@ -494,6 +427,16 @@ export class MainMenuState extends GameState {
             }
         }
 
+        // Quick color blind setting toggle (reuses the settings screen toggle component)
+        const colorBlindToggle = this.htmlElement.querySelector(".quickSettings [data-setting]");
+        if (colorBlindToggle) {
+            this.trackClicks(colorBlindToggle, () => {
+                const newValue = !this.app.settings.getAllSettings().enableColorBlindHelper;
+                this.app.settings.updateSetting("enableColorBlindHelper", newValue);
+                colorBlindToggle.classList.toggle("checked", newValue);
+            });
+        }
+
         this.renderMainMenu();
         this.renderSavegames();
         this.fetchPlayerCount();
@@ -508,12 +451,6 @@ export class MainMenuState extends GameState {
         removeAllChildren(buttonContainer);
 
         const outerDiv = makeDivElement(null, ["outer"], null);
-
-        // Import button
-        this.trackClicks(
-            makeButton(outerDiv, ["importButton", "styledButton"], T.mainMenu.importSavegame),
-            this.requestImportSavegame
-        );
 
         if (this.savedGames.length > 0) {
             // Continue game
@@ -538,12 +475,6 @@ export class MainMenuState extends GameState {
         this.htmlElement
             .querySelector(".mainContainer")
             .setAttribute("data-savegames", String(this.savedGames.length));
-
-        // Mods
-        this.trackClicks(
-            makeButton(outerDiv, ["modsButton", "styledButton"], T.mods.title),
-            this.onModsClicked
-        );
 
         buttonContainer.appendChild(outerDiv);
     }

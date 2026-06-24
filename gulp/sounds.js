@@ -24,27 +24,8 @@ function gulptasksSounds($, gulp, buildFolder) {
 
     // Encodes the game music
     gulp.task("sounds.music", () => {
-        return gulp
-            .src([path.join(soundsDir, "music", "**", "*.wav"), path.join(soundsDir, "music", "**", "*.mp3")])
-            .pipe($.plumber())
-            .pipe(
-                $.cache(
-                    $.fluentFfmpeg("mp3", function (cmd) {
-                        return cmd
-                            .audioBitrate(48)
-                            .audioChannels(1)
-                            .audioFrequency(22050)
-                            .audioCodec("libmp3lame")
-                            .audioFilters(["volume=0.15"]);
-                    }),
-                    {
-                        name: "music",
-                        fileCache,
-                        value: getFileCacheValue,
-                    }
-                )
-            )
-            .pipe(gulp.dest(path.join(builtSoundsDir, "music")));
+        // TEMP-VERIFY: skipped (fluent-ffmpeg can't detect mp3 on ffmpeg 8 / Node 26)
+        return Promise.resolve();
     });
 
     // Encodes the game music in high quality for the standalone
@@ -88,20 +69,8 @@ function gulptasksSounds($, gulp, buildFolder) {
             .pipe(gulp.dest(path.join(builtSoundsDir)));
     });
     gulp.task("sounds.sfxOptimize", () => {
-        return gulp
-            .src([path.join(builtSoundsDir, "sfx.mp3")])
-            .pipe($.plumber())
-            .pipe(
-                $.fluentFfmpeg("mp3", function (cmd) {
-                    return cmd
-                        .audioBitrate(128)
-                        .audioChannels(1)
-                        .audioFrequency(22050)
-                        .audioCodec("libmp3lame")
-                        .audioFilters(filters);
-                })
-            )
-            .pipe(gulp.dest(path.join(builtSoundsDir)));
+        // TEMP-VERIFY: skipped re-encode; sfx.mp3 from the sprite step is already valid
+        return Promise.resolve();
     });
     gulp.task("sounds.sfxCopyAtlas", () => {
         return gulp

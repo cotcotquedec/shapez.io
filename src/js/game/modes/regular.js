@@ -11,6 +11,7 @@ import { ShapeDefinition } from "../shape_definition";
 import { enumHubGoalRewards } from "../tutorial_goals";
 import { HUDWiresToolbar } from "../hud/parts/wires_toolbar";
 import { HUDUnlockNotification } from "../hud/parts/unlock_notification";
+import { HUDEndScreen } from "../hud/parts/end_screen";
 import { HUDMassSelector } from "../hud/parts/mass_selector";
 import { HUDShop } from "../hud/parts/shop";
 import { HUDWaypoints } from "../hud/parts/waypoints";
@@ -334,6 +335,7 @@ export class RegularGameMode extends GameMode {
         this.additionalHudParts = {
             wiresToolbar: HUDWiresToolbar,
             unlockNotification: HUDUnlockNotification,
+            endScreen: HUDEndScreen,
             massSelector: HUDMassSelector,
             shop: HUDShop,
             statistics: HUDStatistics,
@@ -412,7 +414,9 @@ export class RegularGameMode extends GameMode {
      * @returns {boolean}
      */
     getIsFreeplayAvailable() {
-        return this.root.app.restrictionMgr.getHasExtendedLevelsAndFreeplay();
+        // The game is a finite campaign: it ends with an end screen after the configured
+        // levels instead of continuing into infinite freeplay.
+        return false;
     }
 
     /** @returns {boolean} */

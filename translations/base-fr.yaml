@@ -77,6 +77,9 @@ mainMenu:
     play: Jouer
     continue: Continuer
     newGame: Nouvelle partie
+    quickSettings:
+        title: Réglages
+    footerThanks: Merci à tobspr Games ! Ce jeu est un dérivé de shapez, leur logiciel open source.
     changelog: Historique
     subreddit: Reddit
     importSavegame: Importer
@@ -368,6 +371,10 @@ ingame:
         completed: Terminé
         unlockText: <reward> débloqué !
         buttonNextLevel: Niveau suivant
+    endScreen:
+        title: Félicitations !
+        desc: Vous avez terminé tous les niveaux et fini le jeu. Merci d'avoir joué !
+        continue: Retour au jeu
     notifications:
         newUpgrade: Une nouvelle amélioration est disponible !
         gameSaved: Votre partie a bien été sauvegardée.
@@ -560,6 +567,7 @@ buildings:
         toUnlock: pour débloquer
         levelShortcut: Niv
         endOfDemo: Fin de la démo
+        gameComplete: Terminé !
     belt:
         default:
             name: Convoyeur
