@@ -16,69 +16,67 @@ const chinaShapes = G_WEGAME_VERSION || G_CHINA_VERSION;
  * @returns
  */
 const WEB_DEMO_LEVELS = app => {
-
     const levels = [
+        // 1
+        // Circle
+        {
+            shape: "CuCuCuCu", // belts t1
+            required: 30,
+            reward: enumHubGoalRewards.reward_cutter_and_trash,
+        },
 
-    // 1
-    // Circle
-    {
-        shape: "CuCuCuCu", // belts t1
-        required: 30,
-        reward: enumHubGoalRewards.reward_cutter_and_trash,
-    },
+        // 2
+        // Cutter
+        {
+            shape: "----CuCu", //
+            required: 60,
+            reward: enumHubGoalRewards.reward_balancer,
+        },
 
-    // 2
-    // Cutter
-    {
-        shape: "----CuCu", //
-        required: 60,
-        reward: enumHubGoalRewards.reward_balancer,
-    },
+        // 3
+        {
+            shape: "RuRu----", // processors t2
+            required: 90,
+            reward: enumHubGoalRewards.reward_rotater,
+        },
 
-    // 3
-    {
-        shape: "RuRu----", // processors t2
-        required: 90,
-        reward: enumHubGoalRewards.reward_rotater,
-    },
+        // 4
+        // Rotater
+        {
+            shape: "Cu----Cu", // belts t2
+            required: 180,
+            reward: enumHubGoalRewards.reward_tunnel,
+        },
 
-    // 4
-    // Rotater
-    {
-        shape: "Cu----Cu", // belts t2
-        required: 180,
-        reward: enumHubGoalRewards.reward_tunnel,
-    },
+        // 5
+        {
+            shape: "Cu------", // miners t2
+            required: 270,
+            reward: enumHubGoalRewards.reward_painter,
+        },
 
-    // 5
-    {
-        shape: "Cu------", // miners t2
-        required: 270,
-        reward: enumHubGoalRewards.reward_painter,
-    },
+        // 6
+        // Painter
+        {
+            shape: "CrCrCrCr", // unused
+            required: 300,
+            reward: enumHubGoalRewards.reward_rotater_ccw,
+        },
 
-    // 6
-    // Painter
-    {
-        shape: "CrCrCrCr", // unused
-        required: 300,
-        reward: enumHubGoalRewards.reward_rotater_ccw,
-    },
+        // 7
+        {
+            shape: "RbRb----", // painter t2
+            required: 600,
+            reward: enumHubGoalRewards.reward_mixer,
+        },
 
-    // 7
-    {
-        shape: "RbRb----", // painter t2
-        required: 600,
-        reward: enumHubGoalRewards.reward_mixer,
-    },
-
-    // 8
-    // Mixing (purple)
-    {
-        shape: "Cp------", // belts t3
-        required: 900,
-        reward: enumHubGoalRewards.reward_demo_end,
-    }
+        // 8
+        // Mixing (purple)
+        {
+            shape: "Cp------", // belts t3
+            required: 900,
+            reward: enumHubGoalRewards.reward_demo_end,
+        },
     ];
 
     return levels;
