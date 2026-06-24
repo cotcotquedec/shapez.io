@@ -57,6 +57,11 @@ export class HUDUnlockNotification extends BaseHUDPart {
      * @param {enumHubGoalRewards} reward
      */
     showForLevel(level, reward) {
+        // The final level completion is handled by the dedicated end screen instead.
+        if (this.root.hubGoals.isGameWon()) {
+            return;
+        }
+
         this.root.soundProxy.playUi(SOUNDS.levelComplete);
 
         const levels = this.root.gameMode.getLevelDefinitions();

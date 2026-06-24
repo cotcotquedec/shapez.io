@@ -126,6 +126,9 @@ mainMenu:
     play: Play
     continue: Continue
     newGame: New Game
+    quickSettings:
+        title: Settings
+    footerThanks: Thanks to tobspr Games! This game is a derivative of shapez, their open-source software.
     changelog: Changelog
     subreddit: Reddit
     importSavegame: Import
@@ -556,6 +559,12 @@ ingame:
         unlockText: Unlocked <reward>!
         buttonNextLevel: Next Level
 
+    # Shown once the whole campaign has been completed
+    endScreen:
+        title: Congratulations!
+        desc: You have completed every level and finished the game. Thanks for playing!
+        continue: Back to game
+
     # Notifications on the lower right
     notifications:
         newUpgrade: A new upgrade is available!
@@ -784,6 +793,7 @@ buildings:
         toUnlock: to unlock
         levelShortcut: LVL
         endOfDemo: End of Demo
+        gameComplete: Complete!
 
     belt:
         default:

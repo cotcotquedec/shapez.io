@@ -65,12 +65,12 @@ export class HubSystem extends GameSystemWithFilter {
 
         this.hubSprite.draw(context, 0, 0, w, h);
 
-        if (this.root.hubGoals.isEndOfDemoReached()) {
-            // End of demo
+        if (this.root.hubGoals.isGameWon()) {
+            // Campaign finished
             context.font = "bold 12px GameFont";
             context.fillStyle = "#fd0752";
             context.textAlign = "center";
-            context.fillText(T.buildings.hub.endOfDemo.toUpperCase(), w / 2, h / 2 + 6);
+            context.fillText(T.buildings.hub.gameComplete.toUpperCase(), w / 2, h / 2 + 6);
             context.textAlign = "left";
 
             return;

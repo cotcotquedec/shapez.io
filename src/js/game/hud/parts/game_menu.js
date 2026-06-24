@@ -22,8 +22,9 @@ export class HUDGameMenu extends BaseHUDPart {
                     T.ingame.notifications.newUpgrade,
                     enumNotificationType.upgrade,
                 ]),
-                visible: () =>
-                    !this.root.app.settings.getAllSettings().offerHints || this.root.hubGoals.level >= 3,
+                // Always show the upgrades button so the "intermediate objectives" (upgrades) are
+                // visible from the start; the star badge appears as soon as one is affordable.
+                visible: () => true,
             },
             {
                 id: "stats",
